@@ -1,18 +1,34 @@
-import { Box } from "@chakra-ui/react";
-import { Routes, Route } from "react-router";
-import Nav from "./Components/Nav";
-import HomePage from "./Pages/HomePage.jsx";
-import CreatePage from "./Pages/CreatePage.jsx";
+import React from "react";
+import { Navigate, Route, Routes } from "react-router";
+import useAuth from "./zustand/useAuth.js";
+import HomePage from "./Pages/HomePage";
+import RegisterPage from "./Pages/RegisterPage";
+import LoginPage from "./Pages/LoginPage";
 
 const App = () => {
+  const { authUser, checkAuth } = useAuth();
+
+  React.useEffect(() => {
+    checkAuth();
+  }, []);
+
   return (
-    <Box minH={"100vh"}>
-      <Nav />
+    <div className="min-h-screen">
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/create" element={<CreatePage />} />
+        <Route
+          path="/"
+          element={authUser ? <HomePage /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/register"
+          element={!authUser ? <RegisterPage /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/login"
+          element={!authUser ? <LoginPage /> : <Navigate to="/" />}
+        />
       </Routes>
-    </Box>
+    </div>
   );
 };
 
