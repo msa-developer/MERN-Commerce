@@ -60,3 +60,13 @@ export const Create = async (req, res) => {
     res.status(500).json({ msg: "Error In Create function" });
   }
 };
+
+export const Del = async (req, res) => {
+  try {
+    await Product.findByIdAndDelete(req.params.id);
+    res.status(200).json({ msg: "Deleted Successfully" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "Error In Delete function" });
+  }
+};
