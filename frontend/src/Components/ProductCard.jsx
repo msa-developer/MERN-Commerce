@@ -2,6 +2,7 @@ import useProduct from "../zustand/useProduct";
 
 const ProductCard = ({ product }) => {
   const { DelProduct, deleting } = useProduct();
+
   return (
     <div className="card bg-base-100 rounded-sm max-w-96 shadow-sm mx-auto border-secondary border">
       <figure>
@@ -21,7 +22,7 @@ const ProductCard = ({ product }) => {
             {deleting ? (
               <>
                 <span className="loading loading-spinner"></span>
-                Deleting
+                Deleting...
               </>
             ) : (
               "Delete"

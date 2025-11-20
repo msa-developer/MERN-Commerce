@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 const useProduct = create((set, get) => ({
   products: [],
   searchingProduct: false,
-  deleting: false,
+  deleting: null,
 
   getProducts: async () => {
     try {
@@ -20,8 +20,8 @@ const useProduct = create((set, get) => ({
   },
 
   DelProduct: async (id) => {
-    set({ deleting: true });
     try {
+      set({ deleting: id });
       await axiosInstance.delete(`/product/delete/${id}`);
       set((state) => ({
         products: state.products.filter((product) => product._id !== id),
@@ -30,7 +30,7 @@ const useProduct = create((set, get) => ({
     } catch (err) {
       toast.error(err.response?.data?.msg);
     } finally {
-      set({ deleting: false });
+      set({ deleting: null });
     }
   },
 }));
