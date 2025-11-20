@@ -11,7 +11,7 @@ const useProduct = create((set, get) => ({
     try {
       set({ searchingProduct: true });
       const res = await axiosInstance.get("/product/products");
-      set({ product: res.data });
+      set({ products: res.data });
     } catch (err) {
       toast.error(err.response?.data?.msg);
     } finally {
