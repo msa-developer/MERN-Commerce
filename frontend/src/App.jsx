@@ -6,6 +6,8 @@ import RegisterPage from "./Pages/RegisterPage";
 import LoginPage from "./Pages/LoginPage";
 import LoadingScroll from "./Components/LoadingScroll.jsx";
 import CreatePage from "./Pages/CreatePage.jsx";
+import UpdatePage from "./Pages/UpdatePage.jsx";
+import SigninPage from "./Pages/SigninPage.jsx";
 
 const App = () => {
   const { authUser, checkAuth, LoadingAuth } = useAuth();
@@ -25,6 +27,11 @@ const App = () => {
         />
 
         <Route
+          path="/update"
+          element={authUser ? <UpdatePage /> : <Navigate to="/login" />}
+        />
+
+        <Route
           path="/create"
           element={authUser ? <CreatePage /> : <Navigate to="/login" />}
         />
@@ -35,6 +42,11 @@ const App = () => {
         <Route
           path="/login"
           element={!authUser ? <LoginPage /> : <Navigate to="/" />}
+        />
+
+        <Route
+          path="/signin"
+          element={!authUser ? <SigninPage /> : <Navigate to="/" />}
         />
       </Routes>
     </div>

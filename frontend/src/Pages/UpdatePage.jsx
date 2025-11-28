@@ -3,17 +3,28 @@ import React from "react";
 import useProduct from "../zustand/useProduct";
 import { useNavigate } from "react-router";
 
-const CreatePage = () => {
+const UpdatePage = () => {
+  const { selectedProduct, getProduct, updateProduct } = useProduct();
+
   const [data, setData] = React.useState({
     img: "",
     price: "",
     name: "",
   });
 
-  const { CreateProduct } = useProduct();
+  React.useEffect(() => {
+    const fetch = async () => {
+      const { info } = await getProduct(selectedProduct);
+      setData({
+        img: info.img,
+        price: info.price,
+        name: info.name,
+      });
+    };
+    fetch();
+  }, [getProduct, selectedProduct]);
 
   const nav = useNavigate();
-
   return (
     <div>
       <Nav />
@@ -52,11 +63,14 @@ const CreatePage = () => {
               <button
                 className="btn btn-primary"
                 onClick={async () => {
-                  const { success } = await CreateProduct(data);
+                  const { success } = await updateProduct(
+                    selectedProduct,
+                    data,
+                  );
                   if (success) nav("/");
                 }}
               >
-                Create
+                Update
               </button>
             </div>
           </div>
@@ -66,4 +80,4 @@ const CreatePage = () => {
   );
 };
 
-export default CreatePage;
+export default UpdatePage;

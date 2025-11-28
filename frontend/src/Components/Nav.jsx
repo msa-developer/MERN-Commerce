@@ -1,5 +1,7 @@
+import { BadgePlus, LogOut, Sun, SunMoon } from "lucide-react";
 import React from "react";
 import { Link, useLocation } from "react-router";
+import useAuth from "../zustand/useAuth";
 
 const Nav = () => {
   const [theme, setTheme] = React.useState(
@@ -12,6 +14,7 @@ const Nav = () => {
   }, [theme]);
 
   const location = useLocation();
+  const { Logout } = useAuth();
 
   return (
     <>
@@ -24,7 +27,7 @@ const Nav = () => {
             <button
               className={`btn btn-primary ${location.pathname === "/create" ? "hidden" : ""}`}
             >
-              Create
+              <BadgePlus />
             </button>
           </Link>
           <button
@@ -33,7 +36,11 @@ const Nav = () => {
               setTheme(theme === "garden" ? "black" : "garden");
             }}
           >
-            {theme === "garden" ? "Dark" : "Light"}
+            {theme === "garden" ? <SunMoon /> : <Sun />}
+          </button>
+
+          <button className="btn btn-primary" onClick={Logout}>
+            <LogOut />
           </button>
         </section>
       </nav>

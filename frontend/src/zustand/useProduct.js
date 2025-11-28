@@ -5,8 +5,10 @@ import toast from "react-hot-toast";
 const useProduct = create((set, get) => ({
   products: [],
   searchingProduct: false,
-  deleting: null,
   creating: false,
+  selectedProduct: null,
+
+  setSelectedProduct: (id) => set({ selectedProduct: id }),
 
   getProducts: async () => {
     try {
@@ -20,10 +22,10 @@ const useProduct = create((set, get) => ({
     }
   },
 
-  CreateProduct: async () => {
+  CreateProduct: async (data) => {
     try {
       set({ creating: true });
-      await axiosInstance.post("/product/create");
+      await axiosInstance.post("/product/create", data);
       return { success: true };
     } catch (err) {
       toast.error(err.response?.data?.msg);
@@ -35,7 +37,6 @@ const useProduct = create((set, get) => ({
 
   DelProduct: async (id) => {
     try {
-      set({ deleting: id });
       await axiosInstance.delete(`/product/delete/${id}`);
       set((state) => ({
         products: state.products.filter((product) => product._id !== id),
@@ -43,8 +44,25 @@ const useProduct = create((set, get) => ({
       toast.success("deleted successfully");
     } catch (err) {
       toast.error(err.response?.data?.msg);
-    } finally {
-      set({ deleting: null });
+    }
+  },
+
+  updateProduct: async (id, data) => {
+    try {
+      const res = await axiosInstance.put(`/product/update/${id}`, data);
+      return { success: true };
+    } catch (err) {
+      toast.error(err.response?.data?.msg);
+      return { success: false };
+    }
+  },
+
+  getProduct: async (id) => {
+    try {
+      const res = await axiosInstance.get(`/product/${id}`);
+      return { info: res.data };
+    } catch (err) {
+      toast.error(err.response?.data?.msg);
     }
   },
 }));

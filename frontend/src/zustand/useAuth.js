@@ -25,6 +25,24 @@ const useAuth = create((set, get) => ({
       toast.error(err.response?.data?.msg);
     }
   },
+
+  Signin: async (data) => {
+    try {
+      const res = await axiosInstance.post("/auth/register", data);
+      set({ authUser: res.data });
+    } catch (err) {
+      toast.error(err.response?.data?.msg);
+    }
+  },
+
+  Logout: async () => {
+    try {
+      await axiosInstance.post("/auth/logout");
+      set({ authUser: null });
+    } catch (err) {
+      toast.error(err.response?.data?.msg);
+    }
+  },
 }));
 
 export default useAuth;
