@@ -5,9 +5,11 @@ import cookieParser from "cookie-parser";
 import authRouter from "./routes/auth.route.js";
 import productRouter from "./routes/product.route.js";
 import cors from "cors";
+import path from "path";
 
 dotenv.config();
 const app = express();
+const __dirname = path.resolve();
 
 app.use(express.json());
 app.use(cookieParser());
@@ -18,6 +20,13 @@ app.use(
     credentials: true,
   }),
 );
+
+if (process.env.NODE_ENV === production) {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+  app.get("/{*splat}", (_, res) =>
+    res.sendFile(path.join(__dirname, "../frontend/dist/index.html")),
+  );
+}
 
 app.use("/api/auth", authRouter);
 app.use("/api/product", productRouter);
