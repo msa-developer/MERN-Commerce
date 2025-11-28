@@ -3,6 +3,8 @@ import useProduct from "../zustand/useProduct";
 const ProductCard = ({ product }) => {
   const { DelProduct, deleting } = useProduct();
 
+  const deleteId = deleting;
+
   return (
     <div className="card bg-base-100 rounded-sm max-w-96 shadow-sm mx-auto border-secondary border">
       <figure>
@@ -17,9 +19,9 @@ const ProductCard = ({ product }) => {
           <button
             className="btn btn-primary"
             onClick={() => DelProduct(product._id)}
-            disabled={deleting}
+            disabled={deleteId}
           >
-            {deleting ? (
+            {deleteId ? (
               <>
                 <span className="loading loading-spinner"></span>
                 Deleting...
