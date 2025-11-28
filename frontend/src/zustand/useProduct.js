@@ -6,6 +6,7 @@ const useProduct = create((set, get) => ({
   products: [],
   searchingProduct: false,
   deleting: null,
+  creating: false,
 
   getProducts: async () => {
     try {
@@ -16,6 +17,19 @@ const useProduct = create((set, get) => ({
       toast.error(err.response?.data?.msg);
     } finally {
       set({ searchingProduct: false });
+    }
+  },
+
+  CreateProduct: async () => {
+    try {
+      set({ creating: true });
+      await axiosInstance.post("/product/create");
+      return { success: true };
+    } catch (err) {
+      toast.error(err.response?.data?.msg);
+      return { success: false };
+    } finally {
+      set({ creating: false });
     }
   },
 

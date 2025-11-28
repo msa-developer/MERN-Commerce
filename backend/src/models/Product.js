@@ -10,17 +10,14 @@ const productSchema = new mongoose.Schema(
     img: {
       type: String,
       required: true,
-      unique: true,
     },
     name: {
       type: String,
       required: true,
-      unique: true,
     },
     price: {
       type: Number,
       required: true,
-      unique: true,
     },
   },
   { timestamps: true },

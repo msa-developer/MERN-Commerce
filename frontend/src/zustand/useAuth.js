@@ -12,8 +12,6 @@ const useAuth = create((set, get) => ({
       const res = await axiosInstance.get("/auth/check");
       set({ authUser: res.data });
     } catch (err) {
-      set({ authUser: null });
-      toast.error(err.response?.data?.msg);
     } finally {
       set({ Loading: false });
     }

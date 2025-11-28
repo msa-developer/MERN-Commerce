@@ -5,6 +5,7 @@ import HomePage from "./Pages/HomePage";
 import RegisterPage from "./Pages/RegisterPage";
 import LoginPage from "./Pages/LoginPage";
 import LoadingScroll from "./Components/LoadingScroll.jsx";
+import CreatePage from "./Pages/CreatePage.jsx";
 
 const App = () => {
   const { authUser, checkAuth, LoadingAuth } = useAuth();
@@ -21,6 +22,11 @@ const App = () => {
         <Route
           path="/"
           element={authUser ? <HomePage /> : <Navigate to="/login" />}
+        />
+
+        <Route
+          path="/create"
+          element={authUser ? <CreatePage /> : <Navigate to="/login" />}
         />
         <Route
           path="/register"

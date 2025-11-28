@@ -1,12 +1,22 @@
+import { useGSAP } from "@gsap/react";
 import useProduct from "../zustand/useProduct";
+import gsap from "gsap";
 
 const ProductCard = ({ product }) => {
   const { DelProduct, deleting } = useProduct();
 
   const deleteId = deleting;
 
+  useGSAP(() => {
+    gsap.timeline().from(".productCard", {
+      opacity: 0,
+      duration: 1,
+      y: 200,
+    });
+  });
+
   return (
-    <div className="card bg-base-100 rounded-sm max-w-96 shadow-sm mx-auto border-secondary border">
+    <div className="productCard card bg-base-100 rounded-sm max-w-96 shadow-sm mx-auto border-secondary border">
       <figure>
         <img src={product.img} alt={product.name} />
       </figure>
