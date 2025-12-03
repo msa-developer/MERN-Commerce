@@ -17,11 +17,13 @@ const HomePage = () => {
     <>
       <Nav />
       <main className="grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-content-center p-3">
-        {products?.length > 0
-          ? products.map((product) => (
-              <ProductCard product={product} key={product._id} />
-            ))
-          : null}
+        {products?.length > 0 ? (
+          products.map((product) => (
+            <ProductCard product={product} key={product._id} />
+          ))
+        ) : (
+          <div>No Products Found</div>
+        )}
       </main>
     </>
   );
