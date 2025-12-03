@@ -9,10 +9,6 @@ import path from "path";
 
 dotenv.config();
 const app = express();
-const __dirname = path.resolve();
-
-app.use(express.json());
-app.use(cookieParser());
 
 app.use(
   cors({
@@ -20,6 +16,11 @@ app.use(
     credentials: true,
   }),
 );
+
+const __dirname = path.resolve();
+
+app.use(express.json());
+app.use(cookieParser());
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
