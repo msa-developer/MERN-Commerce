@@ -13,12 +13,7 @@ const useProduct = create((set, get) => ({
   getProducts: async () => {
     try {
       const res = await axiosInstance.get("/product/products");
-      if (Array.isArray(res.data)) {
-        set({ products: res.data });
-      } else {
-        set({ products: [] });
-        console.error("API response for products was not an array:", res.data);
-      }
+      set({ products: res.data });
     } catch (err) {
       toast.error(err.response?.data?.msg);
     } finally {
