@@ -17,15 +17,9 @@ const HomePage = () => {
     <>
       <Nav />
       <main className="grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-content-center p-3">
-        {Array.isArray(products) && products.length > 0 ? (
-          products.map((product) => (
-            <ProductCard product={product} key={product._id} />
-          ))
-        ) : (
-          <div className="col-span-full text-center py-8">
-            No products found
-          </div>
-        )}
+        {products?.map?.((product) => (
+          <ProductCard product={product} key={product._id} />
+        ))}
       </main>
     </>
   );
