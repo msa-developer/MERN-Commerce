@@ -7,15 +7,8 @@ import productRouter from "./routes/product.route.js";
 import cors from "cors";
 import path from "path";
 
-dotenv.config();
+dotenv.config({ quiet: true });
 const app = express();
-
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  }),
-);
 
 const __dirname = path.resolve();
 
@@ -24,13 +17,20 @@ app.use(cookieParser());
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
-  app.get("/{*splat}", (_, res) =>
+  app.get("/{*any}", (_, res) =>
     res.sendFile(path.join(__dirname, "../frontend/dist/index.html")),
   );
-}
+} else {
+  app.use(
+    cors({
+      origin: "http://localhost:5173",
+      credentials: true,
+    }),
+  );
 
-app.use("/api/auth", authRouter);
-app.use("/api/product", productRouter);
+  app.use("/api/auth", authRouter);
+  app.use("/api/product", productRouter);
+}
 
 connectDB().then(() => {
   app.listen(process.env.port, () => {
