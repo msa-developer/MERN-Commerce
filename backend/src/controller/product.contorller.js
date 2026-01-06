@@ -4,7 +4,6 @@ export const getAllProducts = async (req, res) => {
   try {
     const product = await Product.find({ creatorId: req.user._id });
     res.status(200).json(product);
-    console.log(`products are : ${product}`);
   } catch (err) {
     console.log(err);
     res.status(500).json({ msg: "Error in Product function" });

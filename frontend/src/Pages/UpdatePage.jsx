@@ -12,9 +12,18 @@ const UpdatePage = () => {
     name: "",
   });
 
+  const nav = useNavigate();
+
   React.useEffect(() => {
     const fetch = async () => {
+      if (!selectedProduct) {
+        nav("/");
+        return;
+      }
+
       const { info } = await getProduct(selectedProduct);
+      if (!info) return;
+
       setData({
         img: info.img,
         price: info.price,
@@ -22,9 +31,7 @@ const UpdatePage = () => {
       });
     };
     fetch();
-  }, [getProduct, selectedProduct]);
-
-  const nav = useNavigate();
+  }, [getProduct, selectedProduct, nav]);
   return (
     <div>
       <Nav />

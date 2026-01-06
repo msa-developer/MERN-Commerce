@@ -9,7 +9,7 @@ const HomePage = () => {
 
   React.useEffect(() => {
     getProducts();
-  }, []);
+  }, [getProducts]);
 
   if (searchingProduct) return <LoadingScroll />;
 
