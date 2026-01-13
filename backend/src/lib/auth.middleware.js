@@ -6,10 +6,7 @@ const authenticateUser = async (req, res, next) => {
     const token = req.cookies?.jwt;
     if (!token) return res.status(401).json({ msg: "No Token Exists" });
 
-    const secret = process.env.JWT_SECRET || process.env.jwt_secret;
-    if (!secret) return res.status(500).json({ msg: "JWT secret missing" });
-
-    const decode = jwt.verify(token, secret);
+    const decode = jwt.verify(token, process.env.JWT_SECRET);
     if (!decode) return res.status(401).json({ msg: "Token Not Valid" });
 
     const user = await User.findById(decode.userId).select("-password");
